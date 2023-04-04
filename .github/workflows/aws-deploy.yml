@@ -47,19 +47,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-# Uncomment and update role-to-assume with a valid AWS role
-#      - name: Assume AWS Role
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-region: us-east-1
-#          role-to-assume: arn:aws:iam::<account-number>:role/<role-name>
-#          role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
-#          role-duration-seconds: 1200
+      - name: Assume AWS Role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::631692904429:role/sagebase-github-oidc-sage-ProviderRoledatacuratori-1KD3QGJEFWP7M
+          role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
+          role-duration-seconds: 1200
 
-# uncomment to deploy to an AWS account
-#      - name: cdk deploy
-#        uses: youyo/aws-cdk-github-actions@v2
-#        with:
-#          cdk_subcommand: 'deploy'
-#          cdk_args: '--require-approval never --context env=<context> --progress events --debug'
-#          actions_comment: false
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_args: '--require-approval never --context env=<context> --progress events --debug'
+          actions_comment: false
