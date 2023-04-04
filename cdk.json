@@ -30,7 +30,7 @@
       "aws",
       "aws-cn"
     ],
-    "dev": {
+    "no-sticky": {
       "IMAGE_PATH_AND_TAG": "ghcr.io/sage-bionetworks/simple_shiny:release-1-user",
       "AWS_DEFAULT_REGION": "us-east-1",
       "PORT": "3838",
@@ -38,9 +38,23 @@
         "CostCenter": "NO PROGRAM / 000000",
         "OwnerEmail": "dnt@sagebase.org"
       },
-      "STACK_NAME_PREFIX": "simple-shiny",
+      "STACK_NAME_PREFIX": "no-sticky",
       "VPC_CIDR": "172.35.0.0/24",
-      "ACM_CERT_ARN": "arn:aws:acm:us-east-1:631692904429:certificate/8644a975-2c1d-49ca-bc73-786745db0bc8"
+      "ACM_CERT_ARN": "arn:aws:acm:us-east-1:631692904429:certificate/8644a975-2c1d-49ca-bc73-786745db0bc8",
+      "STICKY": "false"
+    },
+    "sticky": {
+      "IMAGE_PATH_AND_TAG": "ghcr.io/sage-bionetworks/simple_shiny:release-1-user",
+      "AWS_DEFAULT_REGION": "us-east-1",
+      "PORT": "3838",
+      "TAGS": {
+        "CostCenter": "NO PROGRAM / 000000",
+        "OwnerEmail": "dnt@sagebase.org"
+      },
+      "STACK_NAME_PREFIX": "sticky",
+      "VPC_CIDR": "172.36.0.0/24",
+      "ACM_CERT_ARN": "arn:aws:acm:us-east-1:631692904429:certificate/8644a975-2c1d-49ca-bc73-786745db0bc8",
+      "STICKY": "true"
     }
   }
 }
