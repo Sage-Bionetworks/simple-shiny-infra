@@ -1,0 +1,65 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+
+name: aws-deploy
+
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: ['*']
+
+concurrency: ci-${{ github.ref }}
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Static Analysis
+        uses: pre-commit/action@v3.0.0
+
+      - name: cdk synth
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'synth'
+          actions_comment: false
+          cdk_args: '--context env=dev --debug'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run unit tests
+        run: python -m pytest tests/ -s -v
+
+  cdk-deploy-dev:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: tests
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+# Uncomment and update role-to-assume with a valid AWS role
+#      - name: Assume AWS Role
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-region: us-east-1
+#          role-to-assume: arn:aws:iam::<account-number>:role/<role-name>
+#          role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
+#          role-duration-seconds: 1200
+
+# uncomment to deploy to an AWS account
+#      - name: cdk deploy
+#        uses: youyo/aws-cdk-github-actions@v2
+#        with:
+#          cdk_subcommand: 'deploy'
+#          cdk_args: '--require-approval never --context env=<context> --progress events --debug'
+#          actions_comment: false
