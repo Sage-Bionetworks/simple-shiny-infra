@@ -56,7 +56,7 @@ class DockerFargateStack(Stack):
 
         secret_name = f'{stack_id}/{context}/ecs'
         secrets = {
-            SECRETS_MANAGER_ENV_NAME: get_secret(self, secret_name, secret_name)
+#            SECRETS_MANAGER_ENV_NAME: get_secret(self, secret_name, secret_name)
         }
 
         env_vars = {}
