@@ -61,3 +61,17 @@ jobs:
           cdk_subcommand: 'deploy'
           cdk_args: '--require-approval never --context env=simple-no-sticky --progress events --debug'
           actions_comment: false
+
+      - name: cdk deploy simple-no-sticky
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_args: '--require-approval never --context env=dca-no-sticky --progress events --debug'
+          actions_comment: false
+
+      - name: cdk deploy simple-no-sticky
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_args: '--require-approval never --context env=dca-sticky --progress events --debug'
+          actions_comment: false
