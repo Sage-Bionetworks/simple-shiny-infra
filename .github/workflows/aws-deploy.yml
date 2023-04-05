@@ -26,7 +26,7 @@ jobs:
         with:
           cdk_subcommand: 'synth'
           actions_comment: false
-          cdk_args: '--context env=no-sticky --debug'
+          cdk_args: '--context env=simple-no-sticky --debug'
 
       - name: Install dependencies
         run: pip install -r requirements.txt -r requirements-dev.txt
@@ -34,9 +34,9 @@ jobs:
       - name: Run unit tests
         run: python -m pytest tests/ -s -v
 
-  cdk-deploy-dev:
+  cdk-deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.REF_NAME == 'sticky' || github.REF_NAME == 'no-sticky'}}
+    if: ${{ github.REF_NAME == 'main'}}
     needs: tests
     permissions:
       id-token: write
@@ -55,9 +55,9 @@ jobs:
           role-session-name: GitHubActions-${{ github.repository_owner }}-${{ github.event.repository.name }}-${{ github.run_id }}
           role-duration-seconds: 1200
 
-      - name: cdk deploy
+      - name: cdk deploy simple-no-sticky
         uses: youyo/aws-cdk-github-actions@v2
         with:
           cdk_subcommand: 'deploy'
-          cdk_args: '--require-approval never --context env=${{ github.REF_NAME }} --progress events --debug'
+          cdk_args: '--require-approval never --context env=simple-no-sticky --progress events --debug'
           actions_comment: false
